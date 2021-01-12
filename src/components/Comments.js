@@ -4,6 +4,7 @@ import Comment from "./Comment"
 const Comments = ({comments}) => {
     const [searchUser, setSearchUser] = useState("")
     const [searchComment, setSearchComment] = useState("")
+    const [sortComment, setSortComment] = useState("false")
     let filter = [...comments]
 
     const handleSearch = (event) => {
@@ -14,12 +15,29 @@ const Comments = ({comments}) => {
         setSearchComment(event.target.value)
     }
 
+    const sortComments = () => {
+        setSortComment(!sortComment)
+    }
+
+    
     if (searchUser !== "") {
         filter = comments.filter(comment => comment.user.toLowerCase().includes(searchUser.toLowerCase()))
     }
 
     if (searchComment !== "") {
         filter = comments.filter(comment => comment.comment.toLowerCase().includes(searchComment.toLowerCase()))
+    }
+
+    if (!sortComment) {
+        filter = filter.sort((a, b) => {
+        if (a.comment > b.comment) {
+            return -1
+        } else if (a.comment < b.comment){
+            return -1
+        }
+        return 0
+        })
+        console.log(filter)
     }
 
     const commentUls = filter.map(comment => 
@@ -30,7 +48,8 @@ const Comments = ({comments}) => {
         />
     )
 
-    return(
+
+    return (
         <div>
             <hr/>
             <h3>{comments.length} Comments</h3>
@@ -40,6 +59,7 @@ const Comments = ({comments}) => {
             <div>
                 <input type='text' placeholder="search comments" onChange={handleCommentSearch} />
             </div>
+            <button onClick={sortComments}>Sort Comments</button>
 
             {commentUls}
         </div>
