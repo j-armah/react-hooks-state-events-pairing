@@ -8,7 +8,7 @@ const Details = (props) => {
     const handleLikes = (event) => {
         const emoji = event.target.textContent.split(" ")[1]
 
-        emoji === "👍" ? setLikes(likes + 1) : setDislikes(dislikes + 1)
+        emoji === "👍" ? setLikes(likes => likes + 1) : setDislikes(dislikes => dislikes + 1)
 
         // if (emoji === "👍") {
         //     setLikes(likes + 1)

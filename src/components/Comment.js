@@ -9,7 +9,7 @@ function Comment({ user, comment}) {
     const handleLikes = (event) => {
         const emoji = event.target.textContent.split(" ")[1]
 
-        emoji === "👍" ? setLikes(likes + 1) : setDislikes(dislikes + 1)
+        emoji === "👍" ? setLikes(likes => likes + 1) : setDislikes(dislikes => dislikes + 1)
     }
 
     const handleDelete = (event) => {
@@ -34,8 +34,6 @@ function Comment({ user, comment}) {
             </ul>
         )
     }
-
-    
 }
 
 export default Comment

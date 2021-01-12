@@ -3,14 +3,26 @@ import Comment from "./Comment"
 
 const Comments = ({comments}) => {
     const [searchUser, setSearchUser] = useState("")
+    const [searchComment, setSearchComment] = useState("")
+    let filter = [...comments]
 
     const handleSearch = (event) => {
         setSearchUser(event.target.value)
     }
 
-    const filterUsers = comments.filter(comment => comment.user.toLowerCase().includes(searchUser.toLowerCase()))
+    const handleCommentSearch = (event) => {
+        setSearchComment(event.target.value)
+    }
 
-    const commentUls = filterUsers.map(comment => 
+    if (searchUser !== "") {
+        filter = comments.filter(comment => comment.user.toLowerCase().includes(searchUser.toLowerCase()))
+    }
+
+    if (searchComment !== "") {
+        filter = comments.filter(comment => comment.comment.toLowerCase().includes(searchComment.toLowerCase()))
+    }
+
+    const commentUls = filter.map(comment => 
         <Comment 
             key={comment.id}
             user={comment.user}
@@ -22,11 +34,14 @@ const Comments = ({comments}) => {
         <div>
             <hr/>
             <h3>{comments.length} Comments</h3>
-            
+            <div>
+                <input type='text' placeholder="search users" onChange={handleSearch} />
+            </div>
+            <div>
+                <input type='text' placeholder="search comments" onChange={handleCommentSearch} />
+            </div>
+
             {commentUls}
-        <div>
-            <input type='text' placeholder="search" onChange={handleSearch} />
-        </div>
         </div>
     )
 }
